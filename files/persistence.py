@@ -43,12 +43,16 @@ def read_imdb_csv(name, test = False):
         line = f.readline()
     return (reviews, punts)
 
-def read_titulares_csv(name, test = False):
+def read_titulares_csv(name, test = False, numeric=False):
     f = open(DEFAULT_DATA_DIRECTORY + name,"r", encoding='utf-8')
     line = f.readline() # ignore first line
     line = f.readline()
     reviews = []
-    punts = np.empty((0,), dtype=np.uint8)
+    punts = None
+    if numeric:
+        punts = np.empty((0,), dtype=np.uint8)
+    else:
+        punts = []
     clases = {'sociedad': 0, 'deporte':1, 'politica':2}
     while line:
         i = line.rindex(',')
@@ -58,7 +62,10 @@ def read_titulares_csv(name, test = False):
             print("Review read: ", review)
             print("categoria: ", punt)
         reviews.append(review)
-        punts = np.append(punts, clases[punt])
+        if numeric:
+            punts = np.append(punts, clases[punt])
+        else:
+            punts.append(punt)
         line = f.readline()
     return (reviews, punts)
 

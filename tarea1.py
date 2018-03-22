@@ -35,10 +35,14 @@ def square_root_element(elemento1):
     return math.sqrt(suma)
 
 def get_similitud(elemento1, elemento2):
-    escalar = calcular_producto_escalar(elemento1, elemento2)
-    sqr1 = square_root_element(elemento1)
-    sqr2 = square_root_element(elemento2)
-    return escalar / (sqr1  * sqr2)
+    escalar = 0
+    pww1 = 0
+    pww2 = 0
+    for i in range(0, elemento1.shape[1]):
+        escalar += elemento1[0,i] * elemento2[0,i]
+        pww1 += math.pow(elemento1[0,i], 2)
+        pww2 += math.pow(elemento2[0,i], 2)
+    return escalar / (pww1 * pww2)
 
 
 def get_similitudes(vectors, index_list, element):
